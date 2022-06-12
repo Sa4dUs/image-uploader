@@ -5,11 +5,11 @@ const FilePreview = ({ fileData }) => {
     <div className="">
       <div className="">
         {/* loop over the fileData */}
-        {fileData.fileList.map((f) => {
+        {fileData ? fileData.fileList.map((f) => {
           return (
               <span key={f.name}>{f.name}</span>
           );
-        })}
+        }): <React.Fragment></React.Fragment>}
       </div>
     </div>
   );

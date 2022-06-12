@@ -8,7 +8,7 @@ const Uploaded = ({ path }) => {
 			<h4>Uploaded Successfully!</h4>{" "}
 			<img
 				className="img-fluid center-block w-50 rounded mx-auto py-4"
-				src={`${process.env.NEXT_PUBLIC_API_URL}/${path.replace(/\\/g, "/")}`}
+				src={ path ? `${process.env.NEXT_PUBLIC_API_URL}/${path.replace(/\\/g, "/")}` : ""}
 				alt="upload"
 				height={50}
 				width={50}
@@ -18,10 +18,7 @@ const Uploaded = ({ path }) => {
 				<input
 					type="text"
 					class="form-control"
-					value={`${process.env.NEXT_PUBLIC_API_URL}/${path.replace(
-						/\\/g,
-						"/"
-					)}`}
+					value={path ? `${process.env.NEXT_PUBLIC_API_URL}/${path.replace(/\\/g, "/")}` : ""}
 					aria-describedby="basic-addon2"
 					ref={inputRef}
 				/>
