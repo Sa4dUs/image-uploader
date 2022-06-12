@@ -16,7 +16,7 @@ const upload = multer({ storage: storage })
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-	res.render("index", { title: "Express" })
+	res.status(200).send("Connected to Image Upload API");
 })
 
 /* POST upload page. */
