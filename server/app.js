@@ -11,7 +11,6 @@ const app = express()
 
 // view engine setup
 
-app.set('view engine', 'html');
 app.use(cors())
 app.use(logger("dev"))
 app.use(express.json())
