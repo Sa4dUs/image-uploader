@@ -45,7 +45,7 @@ export default function Home() {
 				return response.json()
 			})
 			.then((data) => {
-				setImgPath(data.path)
+				setImgPath(data.imgPath)
 				setIsUploading(false)
 				setIsUploaded(true)
 			})
