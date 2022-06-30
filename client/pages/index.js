@@ -3,7 +3,7 @@ import { useState, useReducer, useRef } from "react"
 import Uploaded from "./components/Uploaded"
 import Uploading from "./components/Uploading"
 import FilePreview from "./components/FilePreview"
-import axios from "axios"
+import * as filestack from 'filestack-js';
 
 export default function Home() {
 	const [isUploading, setIsUploading] = useState(false)
@@ -35,24 +35,20 @@ export default function Home() {
 		const data = new FormData()
 		data.append("image", file)
 
-		var config = {
-			method: "post",
-			url: `${process.env.NEXT_PUBLIC_API_URL}/upload`,
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data: data,
-		}
+		const client = filestack.init(process.env.NEXT_PUBLIC_API_KEY)
 
-		axios(config)
-			.then((response) => {
-				setImgPath(response.data.imgPath)
+		client
+			.upload(file)
+			.then((res) => {
+				console.log(res)
+				setImgPath(res.url)
 				setIsUploading(false)
 				setIsUploaded(true)
 			})
-			.catch((error) => {
-				console.log(error)
+			.catch((err) => {
+				console.log(err)
 			})
+
 	}
 
 	// Dropzone handlers
