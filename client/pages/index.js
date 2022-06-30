@@ -3,6 +3,7 @@ import { useState, useReducer, useRef } from "react"
 import Uploaded from "./components/Uploaded"
 import Uploading from "./components/Uploading"
 import FilePreview from "./components/FilePreview"
+import axios from "axios"
 
 export default function Home() {
 	const [isUploading, setIsUploading] = useState(false)
@@ -31,23 +32,26 @@ export default function Home() {
 		// API handler
 		setIsUploading(true)
 
-		const formData = new FormData()
-		formData.append("image", file)
+		const data = new FormData()
+		data.append("image", file)
 
-		fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-			method: "POST",
+		var config = {
+			method: "post",
+			url: `${process.env.NEXT_PUBLIC_API_URL}/upload`,
 			headers: {
-				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json",
 			},
-			body: formData,
-		})
+			data: data,
+		}
+
+		axios(config)
 			.then((response) => {
-				return response.json()
-			})
-			.then((data) => {
-				setImgPath(data.imgPath)
+				setImgPath(response.data.imgPath)
 				setIsUploading(false)
 				setIsUploaded(true)
+			})
+			.catch((error) => {
+				console.log(error)
 			})
 	}
 
@@ -112,7 +116,7 @@ export default function Home() {
 						{isUploading ? (
 							<Uploading />
 						) : isUploaded && !isUploading && imgPath != "" ? (
-							<Uploaded path={imgPath}/>
+							<Uploaded path={imgPath} />
 						) : (
 							<React.Fragment>
 								<h2 className="py-0 my-0">Upload your image</h2>

@@ -22,9 +22,10 @@ router.get("/", function (req, res, next) {
 /* POST upload page. */
 router.post("/upload", upload.single("image"), async (req, res) => {
 	if (!req.file) {
-		return res.json({message: "No file was provided"})
+		res.json({message: "No file was provided"})
+		return
 	}
-	return res.json({imgPath: req.file.path})
+	res.json({imgPath: req.file.path.replace("public\\", "")})
 })
 
 module.exports = router
